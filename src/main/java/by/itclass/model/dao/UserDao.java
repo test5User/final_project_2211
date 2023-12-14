@@ -17,7 +17,10 @@ public class UserDao {
     }
 
     public static UserDao getInstance() {
-        return Objects.isNull(dao) ? new UserDao() : dao;
+        if (Objects.isNull(dao)) {
+            dao = new UserDao();
+        }
+        return dao;
     }
 
     public User getUser(String login, String password) {
