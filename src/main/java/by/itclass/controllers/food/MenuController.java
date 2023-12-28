@@ -1,7 +1,11 @@
 package by.itclass.controllers.food;
 
-import by.itclass.controllers.AbstractController;
+import by.itclass.controllers.abstraction.AbstractController;
 import by.itclass.model.entities.FoodItem;
+import by.itclass.model.services.FoodService;
+import by.itclass.model.services.ServiceFactory;
+import by.itclass.model.services.ServiceType;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +19,13 @@ import static by.itclass.constants.JspConstants.*;
 
 @WebServlet(value = MENU_CONTROLLER)
 public class MenuController extends AbstractController {
+    private FoodService foodService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        foodService = (FoodService) ServiceFactory.getInstance(ServiceType.FOOD_SERVICE);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var foodType = Integer.parseInt(req.getParameter(FOOD_TYPE_PARAM));
